@@ -32,6 +32,7 @@ def weighted_area(self):
             x = real(seg.poly())
             y = imag(seg.poly())
             dx = real(seg.poly()).deriv()
+            dy = imag(seg.poly()).deriv()
             integrand = x*y*dx
             integral = integrand.integ()
             area_enclosed += integral(1) - integral(0)
@@ -42,6 +43,7 @@ def weighted_area(self):
         for seg in path:
             x = real(seg.poly())
             y = imag(seg.poly())
+            dx = real(seg.poly()).deriv()
             dy = imag(seg.poly()).deriv()
             integrand = y*x*dy
             integral = integrand.integ()
@@ -70,8 +72,11 @@ for path in paths:
     
     #xcom and ycom of this region
     #print(K[0]/A, K[1]/A)
-    print(f"{region_id:02d} | Segments: {len(path):02d} | Area: {Path.area(path):13f}")
+    print(f"Region {region_id:02d} | Segments: {len(path):02d} | Area: {Path.area(path):13f}")
     
+    for segment in path:
+        print(segment)
+
     xcoms.append(K[0])
     ycoms.append(K[1])
     #print("Area:", A, "Segments:", len(path))
