@@ -14,6 +14,17 @@ def imag(z):
         return z.imag
 
 def weighted_area(self):
+    def reg_area(path):#for testing
+        area_enclosed = 0
+        for seg in path:
+            x = real(seg.poly())
+            y = imag(seg.poly())
+            dx = real(seg.poly()).deriv()
+            dy = imag(seg.poly()).deriv()
+            integrand = x*dy
+            integral = integrand.integ()
+            area_enclosed += integral(1) - integral(0)
+        return area_enclosed
     
     def x_com_sum(path):
         area_enclosed = 0
@@ -42,6 +53,7 @@ def weighted_area(self):
     path_approx = []
     for seg in self:
         path_approx.append(seg)
+    #return (abs(x_com_sum(Path(*path_approx))), abs(y_com_sum(Path(*path_approx))), abs(reg_area(Path(*path_approx))))
     return (abs(x_com_sum(Path(*path_approx))), abs(y_com_sum(Path(*path_approx))))
 
 paths, attributes = svg2paths("edited.svg")
@@ -50,6 +62,7 @@ cnt = 0
 areas = []
 xcoms = []
 ycoms = []
+region_id = 0
 for path in paths:
     A = Path.area(path)
     areas.append(A)
@@ -57,11 +70,13 @@ for path in paths:
     
     #xcom and ycom of this region
     #print(K[0]/A, K[1]/A)
+    print(f"{region_id:02d} | Segments: {len(path):02d} | Area: {Path.area(path):13f}")
     
     xcoms.append(K[0])
     ycoms.append(K[1])
     #print("Area:", A, "Segments:", len(path))
     cnt += 1
+    region_id += 1
 #<circle cx="484" cy="390" r="10" fill="red"/>
 
 total_area = areas[0] - sum(areas[1:])
