@@ -22,7 +22,7 @@ for path in paths:
         #print(seg)
         if (ind == -1): color = h(0,0,0)
         else: color = colors[ind%len(colors)]
-        print(f'{seg.start.real:05.1f},{seg.start.imag:05.1f} | {seg.control1.real:07.3f},{seg.control1.imag:07.3f} | {seg.control2.real:07.3f},{seg.control2.imag:07.1f} | {seg.end.real:05.1f},{seg.end.imag:05.1f} | {col_names[color]}')
+        print(f'{seg.start.real:05.1f},{seg.start.imag:05.1f} | {seg.control1.real:07.3f},{seg.control1.imag:07.3f} | {seg.control2.real:07.3f},{seg.control2.imag:07.3f} | {seg.end.real:05.1f},{seg.end.imag:05.1f} | {col_names[color]}')
         output.write(f'<path d="M {seg.start.real} {seg.start.imag} C {seg.control1.real} {seg.control1.imag} {seg.control2.real} {seg.control2.imag} {seg.end.real} {seg.end.imag}" stroke="#{hex(color)[2:].zfill(6)}"/>')
         output.write('\n')
         ind += 1
